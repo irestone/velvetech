@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import { getCategories } from '../store/actions/data/categories'
+import { getCategories, deleteCategory } from '../store/actions/data/categories'
 
 class CategoryListComponent extends Component {
   componentDidMount() {
@@ -12,11 +12,14 @@ class CategoryListComponent extends Component {
   }
 
   render() {
-    const { categories } = this.props
+    const { categories, deleteCategory } = this.props
     return categories.length ? (
       <ul>
-        {categories.map((c) => (
-          <li key={c._id}>{c.name}</li>
+        {categories.map(({ _id: id, name }) => (
+          <li key={id}>
+            <span>{name}</span>
+            <button onClick={deleteCategory.bind(this, id)}>delete</button>
+          </li>
         ))}
       </ul>
     ) : (
@@ -28,10 +31,11 @@ class CategoryListComponent extends Component {
 CategoryListComponent.propTypes = {
   categories: PropTypes.array,
   getCategories: PropTypes.func,
+  deleteCategory: PropTypes.func,
 }
 
 // todo: optimize selection
 export const CategoryList = connect(
   ({ data: { categories } }) => ({ categories }),
-  { getCategories }
+  { getCategories, deleteCategory }
 )(CategoryListComponent)

@@ -22,3 +22,12 @@ categoriesRouter.post('/', async (req, res) => {
     res.json({ error })
   }
 })
+
+categoriesRouter.delete('/:id', async (req, res) => {
+  try {
+    const removedCategory = await Category.findByIdAndRemove(req.params.id)
+    res.json({ data: removedCategory })
+  } catch (error) {
+    res.json({ error })
+  }
+})

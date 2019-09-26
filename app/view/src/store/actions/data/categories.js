@@ -57,3 +57,34 @@ export const addCategory = (values) => async (dispatch) => {
     dispatch(addCategoryFailure(error))
   }
 }
+
+// Deleting category
+
+export const deleteCategoryRequest = createAction('DATA/DELETE:CATEGORY...')
+export const deleteCategorySuccess = createAction(
+  '...[SUCCESS](DATA/DELETE:CATEGORY)'
+)
+export const deleteCategoryFailure = createAction(
+  '...[FAILURE](DATA/DELETE:CATEGORY)'
+)
+
+export const deleteCategory = (id) => async (dispatch) => {
+  dispatch(deleteCategoryRequest())
+  try {
+    const response = await fetch(`/api/categories/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then((res) => res.json())
+
+    if (response.error) {
+      dispatch(deleteCategoryFailure(response.error))
+    } else {
+      dispatch(deleteCategorySuccess(id))
+    }
+  } catch (error) {
+    console.error(error)
+    dispatch(deleteCategoryFailure(error))
+  }
+}
