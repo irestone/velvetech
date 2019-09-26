@@ -2,9 +2,9 @@ import { createAction } from 'redux-actions'
 
 // Getting all categories
 
-export const getCategoriesRequest = createAction('GET_CATEGORIES_REQUEST')
-export const getCategoriesSuccess = createAction('GET_CATEGORIES_SUCCESS')
-export const getCategoriesFailure = createAction('GET_CATEGORIES_FAILURE')
+export const getCategoriesRequest = createAction('DATA/GET:CATEGORIES...')
+export const getCategoriesSuccess = createAction('DATA/GET:CATEGORIES->SUCCESS')
+export const getCategoriesFailure = createAction('DATA/GET:CATEGORIES->FAILURE')
 
 export const getCategories = () => async (dispatch) => {
   dispatch(getCategoriesRequest())

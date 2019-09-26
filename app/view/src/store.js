@@ -2,7 +2,7 @@ import { createStore, compose, applyMiddleware } from 'redux'
 
 import thunk from 'redux-thunk'
 
-import { rootReducer } from './store/reducers'
+import { root as rootReducer } from './store/reducers/root'
 
 const middlewares = []
 middlewares.push(applyMiddleware(thunk))

@@ -2,9 +2,9 @@ import { createAction } from 'redux-actions'
 
 // Getting authorized user's data
 
-export const getUserRequest = createAction('GET_USER_REQUEST')
-export const getUserSuccess = createAction('GET_USER_SUCCESS')
-export const getUserFailure = createAction('GET_USER_FAILURE')
+export const getUserRequest = createAction('DATA/GET:USER...')
+export const getUserSuccess = createAction('DATA/GET:USER->SUCCESS')
+export const getUserFailure = createAction('DATA/GET:USER->FAILURE')
 
 export const getUser = () => async (dispatch) => {
   dispatch(getUserRequest())

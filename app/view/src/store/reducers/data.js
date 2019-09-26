@@ -1,10 +1,10 @@
 import { handleActions } from 'redux-actions'
 
-import { getUserSuccess } from './actions/user'
-import { getProductsSuccess } from './actions/products'
-import { getCategoriesSuccess } from './actions/categories'
+import { getUserSuccess } from '../actions/data/user'
+import { getProductsSuccess } from '../actions/data/products'
+import { getCategoriesSuccess } from '../actions/data/categories'
 
-export const rootReducer = handleActions(
+export const data = handleActions(
   {
     [getUserSuccess]: (state, { payload }) => ({
       ...state,

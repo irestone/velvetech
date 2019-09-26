@@ -1,10 +1,10 @@
 import { createAction } from 'redux-actions'
 
-import { getUser } from './user'
-import { getProducts } from './products'
+import { getUser } from './data/user'
+import { getProducts } from './data/products'
 
 export const initApp = () => async (dispatch) => {
-  dispatch(createAction('INIT_APP')())
+  dispatch(createAction('APP/INIT')())
   dispatch(getUser())
   dispatch(getProducts())
 }

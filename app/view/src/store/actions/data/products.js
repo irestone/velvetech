@@ -2,9 +2,9 @@ import { createAction } from 'redux-actions'
 
 // Getting all products
 
-export const getProductsRequest = createAction('GET_PRODUCTS_REQUEST')
-export const getProductsSuccess = createAction('GET_PRODUCTS_SUCCESS')
-export const getProductsFailure = createAction('GET_PRODUCTS_FAILURE')
+export const getProductsRequest = createAction('DATA/GET:PRODUCTS...')
+export const getProductsSuccess = createAction('DATA/GET:PRODUCTS->SUCCESS')
+export const getProductsFailure = createAction('DATA/GET:PRODUCTS->FAILURE')
 
 export const getProducts = () => async (dispatch) => {
   dispatch(getProductsRequest())
