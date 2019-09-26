@@ -2,7 +2,10 @@ import { handleActions } from 'redux-actions'
 
 import { getUserSuccess } from '../actions/data/user'
 import { getProductsSuccess } from '../actions/data/products'
-import { getCategoriesSuccess } from '../actions/data/categories'
+import {
+  getCategoriesSuccess,
+  addCategorySuccess,
+} from '../actions/data/categories'
 
 export const data = handleActions(
   {
@@ -13,6 +16,10 @@ export const data = handleActions(
     [getProductsSuccess]: (state, { payload }) => ({
       ...state,
       products: payload,
+    }),
+    [addCategorySuccess]: (state, { payload }) => ({
+      ...state,
+      categories: [...state.categories, payload],
     }),
     [getCategoriesSuccess]: (state, { payload }) => ({
       ...state,
