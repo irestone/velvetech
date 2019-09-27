@@ -9,7 +9,10 @@ import {
 import {
   showCreateCategoryForm,
   hideCreateCategoryForm,
+  editCategory,
+  cancelCategoryEditing,
 } from '../actions/views/categories'
+import { deleteCategorySuccess } from '../actions/data/categories'
 
 const products = handleActions(
   {
@@ -35,8 +38,20 @@ const categories = handleActions(
       ...state,
       isAddCategoryFormHidden: true,
     }),
+    [editCategory]: (state, { payload: id }) => ({
+      ...state,
+      editing: [...state.editing, id],
+    }),
+    [cancelCategoryEditing]: (state, { payload: id }) => ({
+      ...state,
+      editing: state.editing.filter((eid) => eid !== id),
+    }),
+    [deleteCategorySuccess]: (state, { payload: id }) => ({
+      ...state,
+      editing: state.editing.filter((eid) => eid !== id),
+    }),
   },
-  { isAddCategoryFormHidden: true }
+  { isAddCategoryFormHidden: true, editing: [] }
 )
 
 export const views = combineReducers({ products, categories })

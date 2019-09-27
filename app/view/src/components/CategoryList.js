@@ -5,6 +5,11 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import { getCategories, deleteCategory } from '../store/actions/data/categories'
+import {
+  editCategory,
+  cancelCategoryEditing,
+} from '../store/actions/views/categories'
+import { EditCategory } from './forms/EditCategory'
 
 class CategoryListComponent extends Component {
   componentDidMount() {
@@ -12,15 +17,39 @@ class CategoryListComponent extends Component {
   }
 
   render() {
-    const { categories, deleteCategory } = this.props
+    const {
+      categories,
+      editing,
+      editCategory,
+      cancelCategoryEditing,
+      deleteCategory,
+    } = this.props
     return categories.length ? (
       <ul>
-        {categories.map(({ _id: id, name }) => (
-          <li key={id}>
-            <span>{name}</span>
-            <button onClick={deleteCategory.bind(this, id)}>delete</button>
-          </li>
-        ))}
+        {categories.map((category) => {
+          const { _id: id, name } = category
+          const isEditing = editing.includes(id)
+          return (
+            <li key={id}>
+              <span>{name}</span>
+              {isEditing ? (
+                <button onClick={cancelCategoryEditing.bind(this, id)}>
+                  cancel
+                </button>
+              ) : (
+                <button onClick={editCategory.bind(this, id)}>edit</button>
+              )}
+              <button onClick={deleteCategory.bind(this, id)}>delete</button>
+              {isEditing && (
+                <EditCategory
+                  form={id}
+                  category={category}
+                  cancelEditing={cancelCategoryEditing.bind(this, id)}
+                />
+              )}
+            </li>
+          )
+        })}
       </ul>
     ) : (
       <p>There are no categories.</p>
@@ -30,12 +59,20 @@ class CategoryListComponent extends Component {
 
 CategoryListComponent.propTypes = {
   categories: PropTypes.array,
+  editing: PropTypes.array,
   getCategories: PropTypes.func,
   deleteCategory: PropTypes.func,
+  editCategory: PropTypes.func,
+  cancelCategoryEditing: PropTypes.func,
 }
 
 // todo: optimize selection
 export const CategoryList = connect(
-  ({ data: { categories } }) => ({ categories }),
-  { getCategories, deleteCategory }
+  ({
+    data: { categories },
+    views: {
+      categories: { editing },
+    },
+  }) => ({ categories, editing }),
+  { getCategories, deleteCategory, editCategory, cancelCategoryEditing }
 )(CategoryListComponent)

@@ -4,6 +4,16 @@ import { Category } from '../../models/Category'
 
 export const categoriesRouter = new Router()
 
+categoriesRouter.post('/', async (req, res) => {
+  try {
+    const newCategory = new Category(req.body)
+    const savedCategory = await newCategory.save()
+    res.json({ data: savedCategory })
+  } catch (error) {
+    res.json({ error })
+  }
+})
+
 categoriesRouter.get('/', async (req, res) => {
   try {
     const categories = await Category.find()
@@ -13,11 +23,14 @@ categoriesRouter.get('/', async (req, res) => {
   }
 })
 
-categoriesRouter.post('/', async (req, res) => {
+categoriesRouter.put('/:id', async (req, res) => {
   try {
-    const newCategory = new Category(req.body)
-    const savedCategory = await newCategory.save()
-    res.json({ data: savedCategory })
+    const updatedCategory = await Category.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    )
+    res.json({ data: updatedCategory })
   } catch (error) {
     res.json({ error })
   }

@@ -6,6 +6,7 @@ import {
   getCategoriesSuccess,
   addCategorySuccess,
   deleteCategorySuccess,
+  updateCategorySuccess,
 } from '../actions/data/categories'
 
 export const data = handleActions(
@@ -25,6 +26,12 @@ export const data = handleActions(
     [getCategoriesSuccess]: (state, { payload }) => ({
       ...state,
       categories: payload,
+    }),
+    [updateCategorySuccess]: (state, { payload: category }) => ({
+      ...state,
+      categories: state.categories.map((c) =>
+        c._id === category._id ? category : c
+      ),
     }),
     [deleteCategorySuccess]: (state, { payload }) => ({
       ...state,

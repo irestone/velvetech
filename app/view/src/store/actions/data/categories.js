@@ -1,32 +1,8 @@
 import { createAction } from 'redux-actions'
 
-// Getting all categories
-
-export const getCategoriesRequest = createAction('DATA/GET:CATEGORIES...')
-export const getCategoriesSuccess = createAction(
-  '...[SUCCESS](DATA/GET:CATEGORIES)'
-)
-export const getCategoriesFailure = createAction(
-  '...[FAILURE](DATA/GET:CATEGORIES)'
-)
-
-export const getCategories = () => async (dispatch) => {
-  dispatch(getCategoriesRequest())
-  try {
-    const response = await fetch(`/api/categories`).then((res) => res.json())
-
-    if (response.error) {
-      dispatch(getCategoriesFailure(response.error))
-    } else {
-      dispatch(getCategoriesSuccess(response.data))
-    }
-  } catch (error) {
-    console.error(error)
-    dispatch(getCategoriesFailure(error))
-  }
-}
-
-// Creating category
+// =====================================
+//  CREATING
+// =====================================
 
 export const addCategoryRequest = createAction('DATA/ADD:CATEGORY...')
 export const addCategorySuccess = createAction(
@@ -58,7 +34,71 @@ export const addCategory = (values) => async (dispatch) => {
   }
 }
 
-// Deleting category
+// =====================================
+//  GETTING
+// =====================================
+
+export const getCategoriesRequest = createAction('DATA/GET:CATEGORIES...')
+export const getCategoriesSuccess = createAction(
+  '...[SUCCESS](DATA/GET:CATEGORIES)'
+)
+export const getCategoriesFailure = createAction(
+  '...[FAILURE](DATA/GET:CATEGORIES)'
+)
+
+export const getCategories = () => async (dispatch) => {
+  dispatch(getCategoriesRequest())
+  try {
+    const response = await fetch(`/api/categories`).then((res) => res.json())
+
+    if (response.error) {
+      dispatch(getCategoriesFailure(response.error))
+    } else {
+      dispatch(getCategoriesSuccess(response.data))
+    }
+  } catch (error) {
+    console.error(error)
+    dispatch(getCategoriesFailure(error))
+  }
+}
+
+// =====================================
+//  UPDATING
+// =====================================
+
+export const updateCategoryRequest = createAction('DATA/UPDATE:CATEGORY...')
+export const updateCategorySuccess = createAction(
+  '...[SUCCESS](DATA/UPDATE:CATEGORY)'
+)
+export const updateCategoryFailure = createAction(
+  '...[FAILURE](DATA/UPDATE:CATEGORY)'
+)
+
+export const updateCategory = (id, values) => async (dispatch) => {
+  dispatch(updateCategoryRequest())
+  try {
+    const response = await fetch(`/api/categories/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(values),
+    }).then((res) => res.json())
+
+    if (response.error) {
+      dispatch(updateCategoryFailure(response.error))
+    } else {
+      dispatch(updateCategorySuccess(response.data))
+    }
+  } catch (error) {
+    console.error(error)
+    dispatch(updateCategoryFailure(error))
+  }
+}
+
+// =====================================
+//  DELETING
+// =====================================
 
 export const deleteCategoryRequest = createAction('DATA/DELETE:CATEGORY...')
 export const deleteCategorySuccess = createAction(
