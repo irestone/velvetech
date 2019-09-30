@@ -3,13 +3,27 @@ import React, { Component } from 'react'
 // state
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-
 import { getCategories, deleteCategory } from '../store/actions/data/categories'
 import {
   editCategory,
   cancelCategoryEditing,
 } from '../store/actions/views/categories'
+
+// sub-components
 import { EditCategory } from './forms/EditCategory'
+
+// ui
+import {
+  List,
+  ListItem,
+  ListItemText,
+  IconButton,
+  withStyles,
+  Typography,
+} from '@material-ui/core'
+import DeleteIcon from '@material-ui/icons/Delete'
+import EditIcon from '@material-ui/icons/Edit'
+import CancelIcon from '@material-ui/icons/Cancel'
 
 class CategoryListComponent extends Component {
   componentDidMount() {
@@ -23,36 +37,47 @@ class CategoryListComponent extends Component {
       editCategory,
       cancelCategoryEditing,
       deleteCategory,
+      classes,
     } = this.props
     return categories.length ? (
-      <ul>
+      <List className={classes.list}>
         {categories.map((category) => {
           const { _id: id, name } = category
           const isEditing = editing.includes(id)
           return (
-            <li key={id}>
-              <span>{name}</span>
+            <ListItem disableGutters key={id}>
+              <div className={classes.actions}>
+                <IconButton onClick={deleteCategory.bind(this, id)}>
+                  <DeleteIcon fontSize='small' />
+                </IconButton>
+                {isEditing ? (
+                  <IconButton onClick={cancelCategoryEditing.bind(this, id)}>
+                    <CancelIcon fontSize='small' />
+                  </IconButton>
+                ) : (
+                  <IconButton onClick={editCategory.bind(this, id)}>
+                    <EditIcon fontSize='small' />
+                  </IconButton>
+                )}
+              </div>
+
               {isEditing ? (
-                <button onClick={cancelCategoryEditing.bind(this, id)}>
-                  cancel
-                </button>
-              ) : (
-                <button onClick={editCategory.bind(this, id)}>edit</button>
-              )}
-              <button onClick={deleteCategory.bind(this, id)}>delete</button>
-              {isEditing && (
                 <EditCategory
                   form={id}
                   category={category}
                   cancelEditing={cancelCategoryEditing.bind(this, id)}
                 />
+              ) : (
+                <ListItemText className={classes.listItem}>{name}</ListItemText>
               )}
-            </li>
+            </ListItem>
           )
         })}
-      </ul>
+      </List>
     ) : (
-      <p>There are no categories.</p>
+      <Typography className={classes.noCat} variant='body1'>
+        There are no categories.
+      </Typography>
     )
   }
 }
@@ -64,7 +89,20 @@ CategoryListComponent.propTypes = {
   deleteCategory: PropTypes.func,
   editCategory: PropTypes.func,
   cancelCategoryEditing: PropTypes.func,
+  classes: PropTypes.object,
 }
+
+// styling
+const styles = ({ spacing }) => ({
+  noCat: {
+    paddingTop: spacing(3),
+  },
+  actions: {
+    marginRight: spacing(1),
+  },
+})
+
+const Styled = withStyles(styles)(CategoryListComponent)
 
 // todo: optimize selection
 export const CategoryList = connect(
@@ -75,4 +113,4 @@ export const CategoryList = connect(
     },
   }) => ({ categories, editing }),
   { getCategories, deleteCategory, editCategory, cancelCategoryEditing }
-)(CategoryListComponent)
+)(Styled)
