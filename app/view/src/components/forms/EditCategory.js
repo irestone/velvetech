@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
 
+// state
 import { connect } from 'react-redux'
 import { reduxForm, Field } from 'redux-form'
 import PropTypes from 'prop-types'
-
 import { updateCategory } from '../../store/actions/data/categories'
+
+// ui
+import { withStyles } from '@material-ui/core'
+import { TextField } from './muiFields'
 
 // component
 class EditCategoryComponent extends Component {
@@ -26,6 +30,7 @@ class EditCategoryComponent extends Component {
 
   render() {
     const {
+      classes,
       category: { _id: id },
       handleSubmit,
     } = this.props
@@ -37,18 +42,19 @@ class EditCategoryComponent extends Component {
       >
         <Field
           name='name'
-          component='input'
+          component={TextField}
           type='text'
           placeholder='Name'
           autoFocus
+          className={classes.field}
         />
-        <button>Save</button>
       </form>
     )
   }
 }
 
 EditCategoryComponent.propTypes = {
+  classes: PropTypes.object,
   category: PropTypes.object,
   updateCategory: PropTypes.func,
   cancelEditing: PropTypes.func,
@@ -57,8 +63,17 @@ EditCategoryComponent.propTypes = {
   initialize: PropTypes.func,
 }
 
+// styling
+const styles = ({ spacing }) => ({
+  field: {
+    width: spacing(30),
+  },
+})
+
+const Styled = withStyles(styles)(EditCategoryComponent)
+
 // form fields sync
-const EditCategoryReduxFormWrapper = reduxForm()(EditCategoryComponent)
+const SyncedFields = reduxForm()(Styled)
 
 // store connection
 // todo: optimize selection
@@ -67,4 +82,4 @@ export const EditCategory = connect(
   {
     updateCategory,
   }
-)(EditCategoryReduxFormWrapper)
+)(SyncedFields)
