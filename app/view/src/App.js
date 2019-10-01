@@ -14,11 +14,12 @@ import { CssBaseline, Container } from '@material-ui/core'
 // import { Info } from './app/Info'
 
 // views/pages
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import { Products } from './views/Products'
 import { Categories } from './views/Categories'
 import { NotFound } from './views/NotFound'
+import { Nav } from './components/Nav'
 
 export class AppComponent extends Component {
   componentDidMount() {
@@ -31,9 +32,7 @@ export class AppComponent extends Component {
         <div className='App'>
           <CssBaseline />
           <Container maxWidth='md'>
-            <Link to='/'>Products</Link>
-            {' | '}
-            <Link to='/categories'>Categories</Link>
+            <Nav />
             <Switch>
               <Route path='/' exact component={Products} />
               <Route path='/categories' exact component={Categories} />
