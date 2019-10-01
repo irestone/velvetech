@@ -30,11 +30,11 @@ export const CategoriesComponent = ({
   showCreateCategoryForm,
   hideCreateCategoryForm,
 }) => {
-  const styles = useStyles()
+  const classes = useStyles()
   return (
-    <Box className={styles.root}>
+    <Box className={classes.root}>
       <Typography variant='h3'>Categories</Typography>
-      <div className={styles.creatingForm}>
+      <div className={classes.creatingForm}>
         {isAddCategoryFormHidden ? (
           <Button color='primary' onClick={showCreateCategoryForm}>
             New category
