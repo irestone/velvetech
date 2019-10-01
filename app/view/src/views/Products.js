@@ -17,9 +17,6 @@ import { ProductList } from '../components/ProductList'
 import { Box, makeStyles, Typography, Button } from '@material-ui/core'
 
 const useStyles = makeStyles(({ spacing }) => ({
-  root: {
-    marginTop: spacing(3),
-  },
   creatingForm: {
     marginTop: spacing(3),
   },
@@ -36,7 +33,7 @@ const ProductsComponent = ({
 }) => {
   const classes = useStyles()
   return (
-    <Box className={classes.root}>
+    <Box>
       <Typography variant='h3'>Products</Typography>
       <div className={classes.creatingForm}>
         {isAddProductFormHidden ? (
@@ -51,7 +48,9 @@ const ProductsComponent = ({
           <AddProduct cancel={hideCreateProductForm} />
         )}
       </div>
-      <ProductList />
+      <Box mt={2}>
+        <ProductList />
+      </Box>
     </Box>
   )
 }

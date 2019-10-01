@@ -8,7 +8,7 @@ import { initApp } from './store/actions/app'
 
 // ui
 import 'typeface-roboto'
-import { CssBaseline, Container } from '@material-ui/core'
+import { CssBaseline, Container, Box } from '@material-ui/core'
 
 // components
 // import { Info } from './app/Info'
@@ -33,11 +33,13 @@ export class AppComponent extends Component {
           <CssBaseline />
           <Container maxWidth='md'>
             <Nav />
-            <Switch>
-              <Route path='/' exact component={Products} />
-              <Route path='/categories' exact component={Categories} />
-              <Route component={NotFound} />
-            </Switch>
+            <Box mt={5}>
+              <Switch>
+                <Route path='/' exact component={Products} />
+                <Route path='/categories' exact component={Categories} />
+                <Route component={NotFound} />
+              </Switch>
+            </Box>
           </Container>
         </div>
       </Router>

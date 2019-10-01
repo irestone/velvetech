@@ -15,12 +15,12 @@ import { CategoryList } from '../components/CategoryList'
 // ui
 import { Typography, makeStyles, Button, Box } from '@material-ui/core'
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    marginTop: theme.spacing(3),
-  },
+const useStyles = makeStyles(({ spacing }) => ({
   creatingForm: {
-    marginTop: theme.spacing(3),
+    marginTop: spacing(3),
+  },
+  newCategoryButton: {
+    marginTop: spacing(2),
   },
 }))
 
@@ -32,18 +32,24 @@ export const CategoriesComponent = ({
 }) => {
   const classes = useStyles()
   return (
-    <Box className={classes.root}>
+    <Box>
       <Typography variant='h3'>Categories</Typography>
       <div className={classes.creatingForm}>
         {isAddCategoryFormHidden ? (
-          <Button color='primary' onClick={showCreateCategoryForm}>
+          <Button
+            color='primary'
+            onClick={showCreateCategoryForm}
+            className={classes.newCategoryButton}
+          >
             New category
           </Button>
         ) : (
           <AddCategory cancel={hideCreateCategoryForm} />
         )}
       </div>
-      <CategoryList />
+      <Box mt={2}>
+        <CategoryList />
+      </Box>
     </Box>
   )
 }

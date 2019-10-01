@@ -40,7 +40,7 @@ class CategoryListComponent extends Component {
       classes,
     } = this.props
     return categories.length ? (
-      <List className={classes.list}>
+      <List>
         {categories.map((category) => {
           const { _id: id, name } = category
           const isEditing = editing.includes(id)

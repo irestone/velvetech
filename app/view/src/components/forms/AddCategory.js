@@ -30,7 +30,7 @@ class AddCategoryComponent extends Component {
           name='name'
           component={TextField}
           type='text'
-          placeholder='Name'
+          label='Name'
           autoFocus
           className={classes.field}
         />
@@ -66,6 +66,7 @@ AddCategoryComponent.propTypes = {
 const styles = ({ spacing }) => ({
   button: {
     marginLeft: spacing(2),
+    marginTop: spacing(2),
   },
   field: {
     width: spacing(42),
