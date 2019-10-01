@@ -9,8 +9,9 @@ categoriesRouter.post('/', async (req, res) => {
     const newCategory = new Category(req.body)
     const savedCategory = await newCategory.save()
     res.json({ data: savedCategory })
-  } catch (error) {
-    res.json({ error })
+  } catch ({ name, message }) {
+    res.status(500)
+    res.json({ error: { name, message } })
   }
 })
 
