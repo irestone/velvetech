@@ -30,15 +30,24 @@ class CategoryListComponent extends Component {
     this.props.getCategories()
   }
 
+  // categories are sorted asc by default
+  get categories() {
+    return this.props.categories.slice().sort((a, b) => {
+      const aName = a.name.toLowerCase()
+      const bName = b.name.toLowerCase()
+      return aName < bName ? -1 : aName > bName ? 1 : 0
+    })
+  }
+
   render() {
     const {
-      categories,
       editing,
       editCategory,
       cancelCategoryEditing,
       deleteCategory,
       classes,
     } = this.props
+    const { categories } = this
     return categories.length ? (
       <List>
         {categories.map((category) => {
