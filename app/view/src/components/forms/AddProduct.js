@@ -100,7 +100,7 @@ AddProductComponent.propTypes = {
 // styling
 const styles = ({ spacing }) => ({
   field: {
-    width: spacing(18),
+    width: spacing(20),
   },
   button: {
     marginTop: spacing(2),

@@ -69,7 +69,7 @@ const styles = ({ spacing }) => ({
     marginTop: spacing(2),
   },
   field: {
-    width: spacing(42),
+    width: spacing(40),
   },
 })
 

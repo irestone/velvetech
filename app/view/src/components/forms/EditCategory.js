@@ -66,7 +66,7 @@ EditCategoryComponent.propTypes = {
 // styling
 const styles = ({ spacing }) => ({
   field: {
-    width: spacing(30),
+    width: spacing(28),
   },
 })
 
