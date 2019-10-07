@@ -10,22 +10,6 @@ import { Button, withStyles } from '@material-ui/core'
 import { TextField, DateField, SelectField, NumberField } from './muiFields'
 
 class AddProductComponent extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      selectedDate: new Date(),
-      selectedCategory: '',
-    }
-  }
-
-  onDateChange(date) {
-    this.setState({ selectedDate: date })
-  }
-
-  onCategoryChange(e) {
-    this.setState({ selectedCategory: e.target.value })
-  }
-
   onSubmit(values) {
     const { addProduct, reset } = this.props
     addProduct(values)
@@ -120,11 +104,7 @@ const SyncedFields = reduxForm({ form: 'AddProduct' })(Styled)
 export const AddProduct = connect(
   ({ data: { categories } }) => ({
     categories,
-    initialValues: {
-      price: 0,
-      shelfLife: new Date(),
-      category: 'uncategorized',
-    },
+    initialValues: { price: 0, shelfLife: new Date() },
   }),
   { addProduct }
 )(SyncedFields)
