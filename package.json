@@ -16,6 +16,8 @@
     "watch:server": "nodemon -r dotenv/config -r esm ./bin/www",
     "watch:view": "npm start --prefix app/view",
     "build": "npm run build --prefix app/view",
+    "lint": "eslint \"**/*.{js,jsx}\"",
+    "lint:fix": "eslint --fix \"**/*.{js,jsx}\"",
     "postinstall": "npm run build"
   },
   "dependencies": {
