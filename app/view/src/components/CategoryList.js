@@ -56,9 +56,6 @@ class CategoryListComponent extends Component {
           return (
             <ListItem disableGutters key={id}>
               <div className={classes.actions}>
-                <IconButton onClick={deleteCategory.bind(this, id)}>
-                  <DeleteIcon fontSize='small' />
-                </IconButton>
                 {isEditing ? (
                   <IconButton onClick={cancelCategoryEditing.bind(this, id)}>
                     <CancelIcon fontSize='small' />
@@ -68,6 +65,9 @@ class CategoryListComponent extends Component {
                     <EditIcon fontSize='small' />
                   </IconButton>
                 )}
+                <IconButton onClick={deleteCategory.bind(this, id)}>
+                  <DeleteIcon fontSize='small' />
+                </IconButton>
               </div>
 
               {isEditing ? (
