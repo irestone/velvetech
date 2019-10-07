@@ -1,27 +1,19 @@
-import { createAction } from 'redux-actions'
+import { createAction as act } from 'redux-actions'
+import axios from 'axios'
 
 // =====================================
 //  CREATING
 // =====================================
 
-export const addProductRequest = createAction('DATA/ADD:PRODUCT...')
-export const addProductSuccess = createAction('...[SUCCESS](DATA/ADD:PRODUCT)')
-export const addProductFailure = createAction('...[FAILURE](DATA/ADD:PRODUCT)')
+export const addProductRequest = act('DATA/ADD:PRODUCT...')
+export const addProductSuccess = act('...[SUCCESS](DATA/ADD:PRODUCT)')
+export const addProductFailure = act('...[FAILURE](DATA/ADD:PRODUCT)')
 
 export const addProduct = (values) => async (dispatch) => {
   dispatch(addProductRequest())
   try {
-    const response = await fetch(`/api/products`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(values),
-    }).then((res) => res.json())
-
-    if (response.error) {
-      dispatch(addProductFailure(response.error))
-    } else {
-      dispatch(addProductSuccess(response.data))
-    }
+    const { data } = await axios.post(`/api/products`, values)
+    dispatch(addProductSuccess(data.data))
   } catch (error) {
     console.error(error)
     dispatch(addProductFailure(error))
@@ -32,26 +24,57 @@ export const addProduct = (values) => async (dispatch) => {
 //  GETTING
 // =====================================
 
-export const getProductsRequest = createAction('DATA/GET:PRODUCTS...')
-export const getProductsSuccess = createAction(
-  '...[SUCCESS](DATA/GET:PRODUCTS)'
-)
-export const getProductsFailure = createAction(
-  '...[FAILURE](DATA/GET:PRODUCTS)'
-)
+export const getProductsRequest = act('DATA/GET:PRODUCTS...')
+export const getProductsSuccess = act('...[SUCCESS](DATA/GET:PRODUCTS)')
+export const getProductsFailure = act('...[FAILURE](DATA/GET:PRODUCTS)')
 
 export const getProducts = () => async (dispatch) => {
   dispatch(getProductsRequest())
   try {
-    const response = await fetch(`/api/products`).then((res) => res.json())
-
-    if (response.error) {
-      dispatch(getProductsFailure(response.error))
-    } else {
-      dispatch(getProductsSuccess(response.data))
-    }
+    const { data } = await axios.get(`/api/products`)
+    dispatch(getProductsSuccess(data.data))
   } catch (error) {
     console.error(error)
     dispatch(getProductsFailure(error))
+  }
+}
+
+// =====================================
+//  UPDATING
+// =====================================
+
+export const updateProductRequest = act('DATA/UPDATE:PRODUCT...')
+export const updateProductSuccess = act('...[SUCCESS](DATA/UPDATE:PRODUCT)')
+export const updateProductFailure = act('...[FAILURE](DATA/UPDATE:PRODUCT)')
+
+export const updateProduct = (id, values) => async (dispatch) => {
+  dispatch(updateProductRequest())
+  try {
+    const { data } = await axios.put(`/api/products/${id}`, values)
+    dispatch(updateProductSuccess(data.data))
+  } catch (error) {
+    console.error(error)
+    dispatch(updateProductFailure(error))
+  }
+}
+
+// =====================================
+//  DELETING
+// =====================================
+
+// Delete many
+
+export const deleteProductsRequest = act('DATA/DELETE:PRODUCTS...')
+export const deleteProductsSuccess = act('...[SUCCESS](DATA/DELETE:PRODUCTS)')
+export const deleteProductsFailure = act('...[FAILURE](DATA/DELETE:PRODUCTS)')
+
+export const deleteProducts = (ids) => async (dispatch) => {
+  dispatch(deleteProductsRequest())
+  try {
+    await axios.delete(`/api/products`, { data: { ids } })
+    dispatch(deleteProductsSuccess(ids))
+  } catch (error) {
+    console.error(error)
+    dispatch(deleteProductsFailure(error))
   }
 }

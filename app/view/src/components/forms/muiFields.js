@@ -15,6 +15,9 @@ import {
 import 'date-fns'
 import DateFnsUtils from '@date-io/date-fns'
 
+// utils
+export const dateFormat = 'dd/MM/yyyy'
+
 // Text
 export const TextField = ({ input, ...custom }) => (
   <MUITextField type='text' {...input} {...custom} />
@@ -30,12 +33,13 @@ export const NumberField = ({ input, ...custom }) => (
 NumberField.propTypes = { input: PropTypes.object }
 
 // Date
+// todo: default value
 export const DateField = ({ input, ...custom }) => (
   <MuiPickersUtilsProvider utils={DateFnsUtils}>
     <KeyboardDatePicker
       disableToolbar
       variant='inline'
-      format='MM/dd/yyyy'
+      format={dateFormat}
       {...input}
       {...custom}
     />
@@ -45,6 +49,7 @@ export const DateField = ({ input, ...custom }) => (
 DateField.propTypes = { input: PropTypes.object }
 
 // Select
+// todo: option = { value, name } - more generic
 export const SelectField = ({
   name,
   label,
@@ -54,15 +59,8 @@ export const SelectField = ({
   ...custom
 }) => (
   <FormControl {...custom} disabled={!options.length}>
-    <InputLabel htmlFor={key}>{label}</InputLabel>
-    <Select
-      {...input}
-      inputProps={{
-        name,
-        id: key,
-      }}
-    >
-      <MenuItem value='uncategorized'>Uncategorized</MenuItem>
+    {label && <InputLabel htmlFor={key}>{label}</InputLabel>}
+    <Select {...input} inputProps={{ name, id: key }}>
       {options.length &&
         options.map(({ _id, name }) => (
           <MenuItem key={_id} value={_id}>

@@ -1,7 +1,12 @@
 import { handleActions } from 'redux-actions'
 
 import { getUserSuccess } from '../actions/data/user'
-import { getProductsSuccess, addProductSuccess } from '../actions/data/products'
+import {
+  getProductsSuccess,
+  addProductSuccess,
+  deleteProductsSuccess,
+  updateProductSuccess,
+} from '../actions/data/products'
 import {
   getCategoriesSuccess,
   addCategorySuccess,
@@ -22,6 +27,16 @@ export const data = handleActions(
     [getProductsSuccess]: (state, { payload }) => ({
       ...state,
       products: payload,
+    }),
+    [updateProductSuccess]: (state, { payload: product }) => ({
+      ...state,
+      products: state.products.map((p) =>
+        p._id === product._id ? product : p
+      ),
+    }),
+    [deleteProductsSuccess]: (state, { payload: ids }) => ({
+      ...state,
+      products: state.products.filter(({ _id }) => !ids.includes(_id)),
     }),
     [addCategorySuccess]: (state, { payload }) => ({
       ...state,
