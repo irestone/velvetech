@@ -1,21 +1,19 @@
-import { createAction } from 'redux-actions'
+import { createAction as act } from 'redux-actions'
+import axios from 'axios'
 
-// Getting authorized user's data
+// =====================================
+//  READ
+// =====================================
 
-export const getUserRequest = createAction('DATA/GET:USER...')
-export const getUserSuccess = createAction('...[SUCCESS](DATA/GET:USER)')
-export const getUserFailure = createAction('...[FAILURE](DATA/GET:USER)')
+export const getUserRequest = act('DATA/GET:USER...')
+export const getUserSuccess = act('...[SUCCESS](DATA/GET:USER)')
+export const getUserFailure = act('...[FAILURE](DATA/GET:USER)')
 
 export const getUser = () => async (dispatch) => {
   dispatch(getUserRequest())
   try {
-    const response = await fetch(`/api/users/me`).then((res) => res.json())
-
-    if (response.error) {
-      dispatch(getUserFailure(response.error))
-    } else {
-      dispatch(getUserSuccess(response.data))
-    }
+    const { data } = await axios.get(`/api/users/me`)
+    dispatch(getUserSuccess(data.data))
   } catch (error) {
     console.error(error)
     dispatch(getUserFailure(error))

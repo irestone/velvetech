@@ -2,7 +2,7 @@ import { createAction as act } from 'redux-actions'
 import axios from 'axios'
 
 // =====================================
-//  CREATING
+//  CREATE
 // =====================================
 
 export const addProductRequest = act('DATA/ADD:PRODUCT...')
@@ -21,8 +21,10 @@ export const addProduct = (values) => async (dispatch) => {
 }
 
 // =====================================
-//  GETTING
+//  READ
 // =====================================
+
+// Get all
 
 export const getProductsRequest = act('DATA/GET:PRODUCTS...')
 export const getProductsSuccess = act('...[SUCCESS](DATA/GET:PRODUCTS)')
@@ -40,7 +42,7 @@ export const getProducts = () => async (dispatch) => {
 }
 
 // =====================================
-//  UPDATING
+//  UPDATE
 // =====================================
 
 export const updateProductRequest = act('DATA/UPDATE:PRODUCT...')
@@ -59,7 +61,7 @@ export const updateProduct = (id, values) => async (dispatch) => {
 }
 
 // =====================================
-//  DELETING
+//  DELETE
 // =====================================
 
 // Delete many
