@@ -1,4 +1,6 @@
 import React from 'react'
-import { Paper } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 
-export const NotFound = () => <Paper className='NotFound'>Page not found</Paper>
+export const NotFound = () => (
+  <Typography variant='h3'>Page not found</Typography>
+)
