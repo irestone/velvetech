@@ -1,34 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
+// routing
 import { Link, withRouter } from 'react-router-dom'
+
+// ui
 import { Tabs, Tab } from '@material-ui/core'
 
-const links = [
-  { label: 'Products', to: '/', index: 0 },
-  { label: 'Categories', to: '/categories', index: 1 },
-]
+// =====================================
+//  BASE
+// =====================================
 
-export const NavComponent = ({ location: { pathname } }) => {
-  const [route, setRoute] = React.useState(
-    links.find(({ to }) => to === pathname).index
+export const NavBase = ({ location: { pathname } }) => {
+  const [links] = useState([['/', 'Products'], ['/categories', 'Categories']])
+  const [activeTab, setActiveTab] = useState(
+    links.findIndex(([path]) => path === pathname)
   )
 
-  const handleChange = (event, newRoute) => {
-    setRoute(newRoute)
-  }
-
   return (
-    <Tabs value={route} onChange={handleChange}>
-      {links.map(({ label, to, index }) => (
-        <Tab key={index} component={Link} label={label} to={to} value={index} />
+    <Tabs
+      value={activeTab === -1 ? false : activeTab}
+      onChange={(e, tab) => setActiveTab(tab)}
+    >
+      {links.map(([path, label], i) => (
+        <Tab component={Link} key={i} value={i} label={label} to={path} />
       ))}
     </Tabs>
   )
 }
 
-NavComponent.propTypes = {
-  location: PropTypes.object,
-}
+NavBase.propTypes = { location: PropTypes.object }
 
-export const Nav = withRouter(NavComponent)
+// =====================================
+//  WRAPPINGS
+// =====================================
+
+export const Nav = withRouter(NavBase)
