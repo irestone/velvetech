@@ -1,93 +1,102 @@
-import React, { Component } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 
 // state
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
 import { getCategories, deleteCategory } from '../store/actions/data/categories'
 import {
   editCategory,
   cancelCategoryEditing,
 } from '../store/actions/views/categories'
 
-// sub-components
+// components
 import { EditCategory } from './forms/EditCategory'
 
 // ui
 import {
+  makeStyles,
   List,
   ListItem,
   ListItemText,
   IconButton,
-  withStyles,
   Typography,
 } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
 import CancelIcon from '@material-ui/icons/Cancel'
 
-class CategoryListComponent extends Component {
-  // categories are sorted asc by default
-  get categories() {
-    return this.props.categories.slice().sort((a, b) => {
+const useStyles = makeStyles(({ spacing }) => ({
+  noCategories: {
+    paddingTop: spacing(3),
+  },
+  actions: {
+    marginRight: spacing(1),
+  },
+}))
+
+// =====================================
+//  BASE
+// =====================================
+
+const CategoryListBase = ({
+  categories,
+  editing,
+  editCategory,
+  cancelCategoryEditing,
+  deleteCategory,
+}) => {
+  const sortAsc = () =>
+    categories.slice().sort((a, b) => {
       const aName = a.name.toLowerCase()
       const bName = b.name.toLowerCase()
       return aName < bName ? -1 : aName > bName ? 1 : 0
     })
-  }
 
-  render() {
-    const {
-      editing,
-      editCategory,
-      cancelCategoryEditing,
-      deleteCategory,
-      classes,
-    } = this.props
-    const { categories } = this
-    return categories.length ? (
-      <List>
-        {categories.map((category) => {
-          const { _id: id, name } = category
-          const isEditing = editing.includes(id)
-          return (
-            <ListItem disableGutters key={id}>
-              <div className={classes.actions}>
-                {isEditing ? (
-                  <IconButton onClick={cancelCategoryEditing.bind(this, id)}>
-                    <CancelIcon fontSize='small' />
-                  </IconButton>
-                ) : (
-                  <IconButton onClick={editCategory.bind(this, id)}>
-                    <EditIcon fontSize='small' />
-                  </IconButton>
-                )}
-                <IconButton onClick={deleteCategory.bind(this, id)}>
-                  <DeleteIcon fontSize='small' />
+  const classes = useStyles()
+
+  return categories.length ? (
+    <List>
+      {sortAsc().map((category) => {
+        const { _id: id, name } = category
+        const beingEdited = editing.includes(id)
+        return (
+          <ListItem disableGutters key={id}>
+            <div className={classes.actions}>
+              {beingEdited ? (
+                <IconButton onClick={cancelCategoryEditing.bind(this, id)}>
+                  <CancelIcon fontSize='small' />
                 </IconButton>
-              </div>
-
-              {isEditing ? (
-                <EditCategory
-                  form={id}
-                  category={category}
-                  cancelEditing={cancelCategoryEditing.bind(this, id)}
-                />
               ) : (
-                <ListItemText className={classes.listItem}>{name}</ListItemText>
+                <IconButton onClick={editCategory.bind(this, id)}>
+                  <EditIcon fontSize='small' />
+                </IconButton>
               )}
-            </ListItem>
-          )
-        })}
-      </List>
-    ) : (
-      <Typography className={classes.noCat} variant='body1'>
-        There are no categories.
-      </Typography>
-    )
-  }
+              <IconButton onClick={deleteCategory.bind(this, id)}>
+                <DeleteIcon fontSize='small' />
+              </IconButton>
+            </div>
+
+            {beingEdited ? (
+              <EditCategory
+                form={id}
+                category={category}
+                cancelEditing={cancelCategoryEditing.bind(this, id)}
+              />
+            ) : (
+              <ListItemText className={classes.listItem}>{name}</ListItemText>
+            )}
+          </ListItem>
+        )
+      })}
+    </List>
+  ) : (
+    <Typography className={classes.noCategories} variant='body1'>
+      There are no categories.
+    </Typography>
+  )
 }
 
-CategoryListComponent.propTypes = {
+CategoryListBase.propTypes = {
   categories: PropTypes.array,
   editing: PropTypes.array,
   getCategories: PropTypes.func,
@@ -97,19 +106,10 @@ CategoryListComponent.propTypes = {
   classes: PropTypes.object,
 }
 
-// styling
-const styles = ({ spacing }) => ({
-  noCat: {
-    paddingTop: spacing(3),
-  },
-  actions: {
-    marginRight: spacing(1),
-  },
-})
+// =====================================
+//  WRAPPINGS
+// =====================================
 
-const Styled = withStyles(styles)(CategoryListComponent)
-
-// todo: optimize selection
 export const CategoryList = connect(
   ({
     data: { categories },
@@ -118,4 +118,4 @@ export const CategoryList = connect(
     },
   }) => ({ categories, editing }),
   { getCategories, deleteCategory, editCategory, cancelCategoryEditing }
-)(Styled)
+)(CategoryListBase)
