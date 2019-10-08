@@ -4,8 +4,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import {
-  showCreateCategoryForm,
-  hideCreateCategoryForm,
+  showAddCategoryForm,
+  hideAddCategoryForm,
 } from '../store/actions/views/categories'
 
 // sub-components
@@ -27,8 +27,8 @@ const useStyles = makeStyles(({ spacing }) => ({
 // component
 export const CategoriesComponent = ({
   isAddCategoryFormHidden,
-  showCreateCategoryForm,
-  hideCreateCategoryForm,
+  showAddCategoryForm,
+  hideAddCategoryForm,
 }) => {
   const classes = useStyles()
   return (
@@ -38,13 +38,13 @@ export const CategoriesComponent = ({
         {isAddCategoryFormHidden ? (
           <Button
             color='primary'
-            onClick={showCreateCategoryForm}
+            onClick={showAddCategoryForm}
             className={classes.newCategoryButton}
           >
             New category
           </Button>
         ) : (
-          <AddCategory cancel={hideCreateCategoryForm} />
+          <AddCategory cancel={hideAddCategoryForm} />
         )}
       </div>
       <Box mt={2}>
@@ -56,8 +56,8 @@ export const CategoriesComponent = ({
 
 CategoriesComponent.propTypes = {
   isAddCategoryFormHidden: PropTypes.bool,
-  showCreateCategoryForm: PropTypes.func,
-  hideCreateCategoryForm: PropTypes.func,
+  showAddCategoryForm: PropTypes.func,
+  hideAddCategoryForm: PropTypes.func,
 }
 
 export const Categories = connect(
@@ -66,5 +66,5 @@ export const Categories = connect(
       categories: { isAddCategoryFormHidden },
     },
   }) => ({ isAddCategoryFormHidden }),
-  { showCreateCategoryForm, hideCreateCategoryForm }
+  { showAddCategoryForm, hideAddCategoryForm }
 )(CategoriesComponent)

@@ -1,17 +1,17 @@
 import { handleActions } from 'redux-actions'
 
 import {
-  showCreateProductForm,
-  hideCreateProductForm,
+  showAddProductForm,
+  hideAddProductForm,
 } from '../../actions/views/products'
 
 export const products = handleActions(
   {
-    [showCreateProductForm]: (state) => ({
+    [showAddProductForm]: (state) => ({
       ...state,
       isAddProductFormHidden: false,
     }),
-    [hideCreateProductForm]: (state) => ({
+    [hideAddProductForm]: (state) => ({
       ...state,
       isAddProductFormHidden: true,
     }),

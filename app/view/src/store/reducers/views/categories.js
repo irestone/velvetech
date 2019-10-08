@@ -1,8 +1,8 @@
 import { handleActions } from 'redux-actions'
 
 import {
-  showCreateCategoryForm,
-  hideCreateCategoryForm,
+  showAddCategoryForm,
+  hideAddCategoryForm,
   editCategory,
   cancelCategoryEditing,
 } from '../../actions/views/categories'
@@ -11,11 +11,11 @@ import { deleteCategorySuccess } from '../../actions/data/categories'
 
 export const categories = handleActions(
   {
-    [showCreateCategoryForm]: (state) => ({
+    [showAddCategoryForm]: (state) => ({
       ...state,
       isAddCategoryFormHidden: false,
     }),
-    [hideCreateCategoryForm]: (state) => ({
+    [hideAddCategoryForm]: (state) => ({
       ...state,
       isAddCategoryFormHidden: true,
     }),

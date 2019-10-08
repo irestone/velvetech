@@ -5,8 +5,8 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import {
-  showCreateProductForm,
-  hideCreateProductForm,
+  showAddProductForm,
+  hideAddProductForm,
 } from '../store/actions/views/products'
 
 // sub-components
@@ -28,8 +28,8 @@ const useStyles = makeStyles(({ spacing }) => ({
 // component
 const ProductsComponent = ({
   isAddProductFormHidden,
-  showCreateProductForm,
-  hideCreateProductForm,
+  showAddProductForm,
+  hideAddProductForm,
 }) => {
   const classes = useStyles()
   return (
@@ -39,13 +39,13 @@ const ProductsComponent = ({
         {isAddProductFormHidden ? (
           <Button
             color='primary'
-            onClick={showCreateProductForm}
+            onClick={showAddProductForm}
             className={classes.newProductButton}
           >
             New product
           </Button>
         ) : (
-          <AddProduct cancel={hideCreateProductForm} />
+          <AddProduct cancel={hideAddProductForm} />
         )}
       </div>
       <Box mt={2}>
@@ -57,8 +57,8 @@ const ProductsComponent = ({
 
 ProductsComponent.propTypes = {
   isAddProductFormHidden: PropTypes.bool,
-  showCreateProductForm: PropTypes.func,
-  hideCreateProductForm: PropTypes.func,
+  showAddProductForm: PropTypes.func,
+  hideAddProductForm: PropTypes.func,
 }
 
 // store connection
@@ -71,5 +71,5 @@ export const Products = connect(
   }) => ({
     isAddProductFormHidden,
   }),
-  { showCreateProductForm, hideCreateProductForm }
+  { showAddProductForm, hideAddProductForm }
 )(ProductsComponent)
