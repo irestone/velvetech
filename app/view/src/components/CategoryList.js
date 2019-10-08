@@ -26,10 +26,6 @@ import EditIcon from '@material-ui/icons/Edit'
 import CancelIcon from '@material-ui/icons/Cancel'
 
 class CategoryListComponent extends Component {
-  componentDidMount() {
-    this.props.getCategories()
-  }
-
   // categories are sorted asc by default
   get categories() {
     return this.props.categories.slice().sort((a, b) => {
