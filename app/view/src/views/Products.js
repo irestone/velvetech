@@ -1,15 +1,14 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 // state
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
-
 import {
   showAddProductForm,
   hideAddProductForm,
 } from '../store/actions/views/products'
 
-// sub-components
+// components
 import { AddProduct } from '../components/forms/AddProduct'
 import { ProductList } from '../components/ProductList'
 
@@ -25,13 +24,17 @@ const useStyles = makeStyles(({ spacing }) => ({
   },
 }))
 
-// component
-const ProductsComponent = ({
+// =====================================
+//  BASE
+// =====================================
+
+const ProductsBase = ({
   isAddProductFormHidden,
   showAddProductForm,
   hideAddProductForm,
 }) => {
   const classes = useStyles()
+
   return (
     <Box>
       <Typography variant='h3'>Products</Typography>
@@ -55,21 +58,19 @@ const ProductsComponent = ({
   )
 }
 
-ProductsComponent.propTypes = {
+ProductsBase.propTypes = {
   isAddProductFormHidden: PropTypes.bool,
   showAddProductForm: PropTypes.func,
   hideAddProductForm: PropTypes.func,
 }
 
-// store connection
-// todo: optimize selection
+// =====================================
+//  WRAPPINGS
+// =====================================
+
 export const Products = connect(
-  ({
-    views: {
-      products: { isAddProductFormHidden },
-    },
-  }) => ({
-    isAddProductFormHidden,
+  ({ views: { products } }) => ({
+    isAddProductFormHidden: products.isAddProductFormHidden,
   }),
   { showAddProductForm, hideAddProductForm }
-)(ProductsComponent)
+)(ProductsBase)

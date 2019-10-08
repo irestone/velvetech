@@ -1,14 +1,14 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 // state
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
 import {
   showAddCategoryForm,
   hideAddCategoryForm,
 } from '../store/actions/views/categories'
 
-// sub-components
+// components
 import { AddCategory } from '../components/forms/AddCategory'
 import { CategoryList } from '../components/CategoryList'
 
@@ -24,13 +24,17 @@ const useStyles = makeStyles(({ spacing }) => ({
   },
 }))
 
-// component
-export const CategoriesComponent = ({
+// =====================================
+//  BASE
+// =====================================
+
+export const CategoriesBase = ({
   isAddCategoryFormHidden,
   showAddCategoryForm,
   hideAddCategoryForm,
 }) => {
   const classes = useStyles()
+
   return (
     <Box>
       <Typography variant='h3'>Categories</Typography>
@@ -54,17 +58,19 @@ export const CategoriesComponent = ({
   )
 }
 
-CategoriesComponent.propTypes = {
+CategoriesBase.propTypes = {
   isAddCategoryFormHidden: PropTypes.bool,
   showAddCategoryForm: PropTypes.func,
   hideAddCategoryForm: PropTypes.func,
 }
 
+// =====================================
+//  WRAPPINGS
+// =====================================
+
 export const Categories = connect(
-  ({
-    views: {
-      categories: { isAddCategoryFormHidden },
-    },
-  }) => ({ isAddCategoryFormHidden }),
+  ({ views: { categories } }) => ({
+    isAddCategoryFormHidden: categories.isAddCategoryFormHidden,
+  }),
   { showAddCategoryForm, hideAddCategoryForm }
-)(CategoriesComponent)
+)(CategoriesBase)
