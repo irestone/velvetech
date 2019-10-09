@@ -15,8 +15,15 @@ import {
 import 'date-fns'
 import DateFnsUtils from '@date-io/date-fns'
 
-// utils
+// =====================================
+//  UTILS
+// =====================================
+
 export const dateFormat = 'dd/MM/yyyy'
+
+// =====================================
+//  FIELDS
+// =====================================
 
 // Text
 export const TextField = ({ input, ...custom }) => (
@@ -33,7 +40,6 @@ export const NumberField = ({ input, ...custom }) => (
 NumberField.propTypes = { input: PropTypes.object }
 
 // Date
-// todo: default value
 export const DateField = ({ input, ...custom }) => (
   <MuiPickersUtilsProvider utils={DateFnsUtils}>
     <KeyboardDatePicker
