@@ -80,7 +80,7 @@ const CategoryListBase = ({
               <EditCategory
                 form={id}
                 category={category}
-                cancelEditing={cancelCategoryEditing.bind(this, id)}
+                cancel={cancelCategoryEditing.bind(this, id)}
               />
             ) : (
               <ListItemText className={classes.listItem}>{name}</ListItemText>
