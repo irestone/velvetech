@@ -1,9 +1,8 @@
-import { createAction } from 'redux-actions'
+import { createAction } from '../../../utils/actions'
 
-const act = (action) => createAction(`VIEWS/CATEGORIES/${action}`)
+const ca = createAction.bind(this, 'views/categories')
 
-// Forms
-export const showAddCategoryForm = act('SHOW:ADD_CATEGORY_FORM')
-export const hideAddCategoryForm = act('HIDE:ADD_CATEGORY_FORM')
-export const editCategory = act('EDIT:CATEGORY')
-export const cancelCategoryEditing = act('CANCEL:CATEGORY_EDITING')
+export const showAddCategoryForm = ca('showw', 'add_category_form')
+export const hideAddCategoryForm = ca('hide', 'add_category_form')
+export const editCategory = ca('edit', 'category')
+export const cancelCategoryEditing = ca('cancel', 'category_editing')
