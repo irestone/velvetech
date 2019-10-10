@@ -3,10 +3,11 @@ import PropTypes from 'prop-types'
 
 import {
   TextField as MUITextField,
-  FormControl,
   InputLabel,
   MenuItem,
   Select,
+  FormControl,
+  FormHelperText,
 } from '@material-ui/core'
 import {
   MuiPickersUtilsProvider,
@@ -62,6 +63,7 @@ export const SelectField = ({
   options = [],
   key = Math.random(),
   input,
+  helperText,
   ...custom
 }) => (
   <FormControl {...custom} disabled={!options.length}>
@@ -74,6 +76,7 @@ export const SelectField = ({
           </MenuItem>
         ))}
     </Select>
+    <FormHelperText>{helperText}</FormHelperText>
   </FormControl>
 )
 
@@ -82,5 +85,6 @@ SelectField.propTypes = {
   key: PropTypes.string,
   name: PropTypes.string,
   label: PropTypes.string,
+  helperText: PropTypes.any,
   options: PropTypes.array,
 }

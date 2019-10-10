@@ -58,7 +58,8 @@
     "redux-actions": "^2.6.5",
     "redux-form": "^8.2.6",
     "redux-thunk": "^2.3.0",
-    "typeface-roboto": "0.0.75"
+    "typeface-roboto": "0.0.75",
+    "validate.js": "^0.13.1"
   },
   "devDependencies": {
     "@types/mongoose": "^5.5.12",

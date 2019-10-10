@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 // state
@@ -6,12 +6,16 @@ import { connect } from 'react-redux'
 import { reduxForm, Field } from 'redux-form'
 import { addCategory } from '../../store/actions/data/categories'
 
+// utils
+import { validateCategory as validate } from '../../utils/validators'
+
 // components
 import { TextField } from './muiFields'
 
 // ui
 import { makeStyles, Button } from '@material-ui/core'
 
+// styles
 const useStyles = makeStyles(({ spacing }) => ({
   button: {
     marginLeft: spacing(2),
@@ -35,8 +39,12 @@ const AddCategoryBase = ({
   destroy,
 }) => {
   const classes = useStyles()
+  const [errors, setErrors] = useState({})
 
   const onSubmit = (values) => {
+    const errs = validate(values)
+    setErrors(errs || {})
+    if (errs) return
     addCategory(values)
     reset()
   }
@@ -49,6 +57,8 @@ const AddCategoryBase = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Field
+        error={!!errors.name}
+        helperText={!!errors.name && errors.name.join('. ')}
         name='name'
         component={TextField}
         type='text'

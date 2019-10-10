@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 // state
@@ -6,12 +6,16 @@ import { connect } from 'react-redux'
 import { reduxForm, Field } from 'redux-form'
 import { addProduct } from '../../store/actions/data/products'
 
+// utils
+import { validateProduct as validate } from '../../utils/validators'
+
 // components
 import { TextField, DateField, SelectField, NumberField } from './muiFields'
 
 // ui
 import { makeStyles, Button } from '@material-ui/core'
 
+// styles
 const useStyles = makeStyles(({ spacing }) => ({
   field: {
     width: spacing(20),
@@ -36,8 +40,12 @@ const AddProductBase = ({
   destroy,
 }) => {
   const classes = useStyles()
+  const [errors, setErrors] = useState({})
 
   const onSubmit = (values) => {
+    const errs = validate(values)
+    setErrors(errs || {})
+    if (errs) return
     addProduct(values)
     reset()
   }
@@ -50,6 +58,8 @@ const AddProductBase = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Field
+        error={!!errors.name}
+        helperText={!!errors.name && errors.name.join('. ')}
         component={TextField}
         name='name'
         label='Name'
@@ -57,18 +67,24 @@ const AddProductBase = ({
         className={classes.field}
       />
       <Field
+        error={!!errors.price}
+        helperText={!!errors.price && errors.price.join('. ')}
         component={NumberField}
         name='price'
         label='Price (&#8381;)'
         className={classes.field}
       />
       <Field
+        error={!!errors.shelfLife}
+        helperText={!!errors.shelfLife && errors.shelfLife.join('. ')}
         component={DateField}
         name='shelfLife'
         label='Shelf Life'
         className={classes.field}
       />
       <Field
+        error={!!errors.category}
+        helperText={!!errors.category && errors.category.join('. ')}
         component={SelectField}
         name='category'
         label='Category'
@@ -78,7 +94,7 @@ const AddProductBase = ({
       <Button
         type='submit'
         color='primary'
-        disabled={pristine}
+        // disabled={pristine}
         className={classes.button}
       >
         Add

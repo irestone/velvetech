@@ -4,10 +4,7 @@ import PropTypes from 'prop-types'
 // state
 import { connect } from 'react-redux'
 import { getCategories, deleteCategory } from '../store/actions/data/categories'
-import {
-  editCategory,
-  cancelCategoryEditing,
-} from '../store/actions/views/categories'
+import { editCategory } from '../store/actions/views/categories'
 
 // components
 import { EditCategory } from './forms/EditCategory'
@@ -23,7 +20,6 @@ import {
 } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
-import CancelIcon from '@material-ui/icons/Cancel'
 
 const useStyles = makeStyles(({ spacing }) => ({
   noCategories: {
@@ -42,7 +38,6 @@ const CategoryListBase = ({
   categories,
   editing,
   editCategory,
-  cancelCategoryEditing,
   deleteCategory,
 }) => {
   const sortAsc = () =>
@@ -61,29 +56,20 @@ const CategoryListBase = ({
         const beingEdited = editing.includes(id)
         return (
           <ListItem disableGutters key={id}>
-            <div className={classes.actions}>
-              {beingEdited ? (
-                <IconButton onClick={cancelCategoryEditing.bind(this, id)}>
-                  <CancelIcon fontSize='small' />
-                </IconButton>
-              ) : (
-                <IconButton onClick={editCategory.bind(this, id)}>
-                  <EditIcon fontSize='small' />
-                </IconButton>
-              )}
-              <IconButton onClick={deleteCategory.bind(this, id)}>
-                <DeleteIcon fontSize='small' />
-              </IconButton>
-            </div>
-
             {beingEdited ? (
-              <EditCategory
-                form={id}
-                category={category}
-                cancel={cancelCategoryEditing.bind(this, id)}
-              />
+              <EditCategory form={id} category={category} />
             ) : (
-              <ListItemText className={classes.listItem}>{name}</ListItemText>
+              <>
+                <span className={classes.actions}>
+                  <IconButton title='Edit' onClick={() => editCategory(id)}>
+                    <EditIcon fontSize='small' />
+                  </IconButton>
+                  <IconButton title='Delete' onClick={() => deleteCategory(id)}>
+                    <DeleteIcon fontSize='small' />
+                  </IconButton>
+                </span>
+                <ListItemText className={classes.listItem}>{name}</ListItemText>
+              </>
             )}
           </ListItem>
         )
@@ -102,7 +88,6 @@ CategoryListBase.propTypes = {
   getCategories: PropTypes.func,
   deleteCategory: PropTypes.func,
   editCategory: PropTypes.func,
-  cancelCategoryEditing: PropTypes.func,
   classes: PropTypes.object,
 }
 
@@ -117,5 +102,5 @@ export const CategoryList = connect(
       categories: { editing },
     },
   }) => ({ categories, editing }),
-  { getCategories, deleteCategory, editCategory, cancelCategoryEditing }
+  { getCategories, deleteCategory, editCategory }
 )(CategoryListBase)
