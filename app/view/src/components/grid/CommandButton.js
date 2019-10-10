@@ -31,13 +31,13 @@ const DeleteCommandButton = ({ onExecute }) => (
 )
 
 const CommitCommandButton = ({ onExecute }) => (
-  <IconButton onClick={onExecute} title='Save changes'>
+  <IconButton onClick={onExecute} title='Save'>
     <SaveIcon fontSize='small' />
   </IconButton>
 )
 
 const CancelCommandButton = ({ onExecute }) => (
-  <IconButton color='secondary' onClick={onExecute} title='Cancel changes'>
+  <IconButton color='secondary' onClick={onExecute} title='Cancel'>
     <CancelIcon fontSize='small' />
   </IconButton>
 )
