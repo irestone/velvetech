@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { dateFormat } from '../../utils/constants'
+
 import {
   TextField as MUITextField,
   InputLabel,
@@ -15,12 +17,6 @@ import {
 } from '@material-ui/pickers'
 import 'date-fns'
 import DateFnsUtils from '@date-io/date-fns'
-
-// =====================================
-//  UTILS
-// =====================================
-
-export const dateFormat = 'dd/MM/yyyy'
 
 // =====================================
 //  FIELDS

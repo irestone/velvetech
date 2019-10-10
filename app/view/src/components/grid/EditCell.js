@@ -5,15 +5,11 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 // components
-import {
-  TextField,
-  DateField,
-  NumberField,
-  dateFormat,
-} from '../forms/muiFields'
+import { TextField, DateField, NumberField } from '../forms/muiFields'
 
 // utils
 import { parse } from 'date-fns'
+import { dateFormat } from '../../utils/constants'
 
 // ui
 import { TableCell } from '@material-ui/core'

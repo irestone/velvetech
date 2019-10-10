@@ -7,7 +7,7 @@ import { deleteProducts, updateProduct } from '../store/actions/data/products'
 
 // utils
 import { format } from 'date-fns'
-import { dateFormat } from './forms/muiFields'
+import { dateFormat } from '../utils/constants'
 
 // components
 import { CommandButton } from './grid/CommandButton'
