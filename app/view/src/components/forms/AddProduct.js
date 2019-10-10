@@ -94,7 +94,7 @@ const AddProductBase = ({
       <Button
         type='submit'
         color='primary'
-        // disabled={pristine}
+        disabled={pristine}
         className={classes.button}
       >
         Add
